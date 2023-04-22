@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NavigationBar</title>
+</head>
+
+<body>
+<nav th:fragment="navbar" class="navbar navbar-expand-md bg-dark navbar-dark">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="@{/}">Home!</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/index' ? 'active':''}"
+                   th:href="@{/recordlabels}">Record Labels</a>
+            </li>
+            <li>
+                <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/artists' ? 'active':''}"
+                   th:href="@{/artists}">Artists
+                </a>
+            </li>
+            <li>
+                <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/albums' ? 'active':''}"
+                   th:href="@{/albums}">Albums
+                </a>
+            </li>
+            <li>
+                <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/songs' ? 'active':''}"
+                   th:href="@{/songs}">Songs
+                </a>
+            </li>
+            <li>
+                <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/managers' ? 'active':''}"
+                   th:href="@{/managers}">Managers
+                </a>
+            </li>
+
+            <li sec:authorize="hasAnyRole('ADMIN','MANAGER')">
+                <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/consults' ? 'active':''}"
+                   th:href="@{/consults}">Consults
+                </a>
+            </li>
+
+            <li sec:authorize="hasRole('MANAGER')">
+                <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/consults' ? 'active':''}"
+                   th:href="@{/consults/my-consults}">My consults
+                </a>
+            </li>
+
+            <li sec:authorize="hasRole('MANAGER')">
+                <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/managers' ? 'active':''}"
+                   th:href="@{/managers/my-profile}">My profile
+                </a>
+            </li>
+
+            <li sec:authorize="hasAnyRole('ADMIN','MANAGER')">
+                <a class="nav-link"
+                   th:classappend="${#httpServletRequest.getRequestURI() == '/deals' ? 'active':''}"
+                   th:href="@{/deals}">Deals
+                </a>
+            </li>
+
+            <li>
+                <form th:if="${T(com.example.project.service.security.UserService).isLoggedIn()}" id="logoutform"
+                      th:action="@{/logout}" method="POST">
+                    <a class="nav-link" href="#" onclick="document.getElementById('logoutform').submit()">
+                        Logout
+                    </a>
+                </form>
+                <a class="nav-link" th:unless="${T(com.example.project.service.security.UserService).isLoggedIn()}"
+                   id="loginform" th:href="@{/login}">
+                    Login
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+</body>
+</html>

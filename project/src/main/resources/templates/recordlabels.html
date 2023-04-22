@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Record Labels</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css"/>
+    <script src="/webjars/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+</head>
+
+<div th:insert="navbar :: navbar"></div>
+
+<body>
+<div class="container">
+    <table class="table table-striped table-hover ">
+        <thead class="thead-inverse">
+        <tr>
+            <th sec:authorize="hasAnyRole('ADMIN,MANAGER')">ID</th>
+            <th>Name</th>
+            <th>Details</th>
+            <th sec:authorize="hasRole('ADMIN')">Edit</th>
+            <th sec:authorize="hasRole('ADMIN')">Delete</th>
+        </tr>
+        </thead>
+        <tr th:each="rec: ${recordLabels}">
+
+            <td sec:authorize="hasAnyRole('ADMIN,MANAGER')" th:text="${rec.getId()}"></td>
+            <td th:text="${rec.getName()}"></td>
+            <td>
+                <a href="#" th:href="@{'/recordlabels/{id}'(id=${rec.id})}">
+                    <button class="btn btn-success">Details</button>
+                </a>
+            </td>
+            <td sec:authorize="hasRole('ADMIN')">
+                <a class="btn btn-info" href="#" th:href="@{/recordlabels/{id}/edit(id=${rec.id})}"
+                   role="button">
+                    Edit
+                </a>
+            </td>
+            <td sec:authorize="hasRole('ADMIN')">
+                <form th:object="${rec}" th:action="@{/recordlabels/{id}/delete(id=${rec.id})}" th:method="GET">
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="container" sec:authorize="hasRole('ADMIN')">
+    <div class="row">
+        <div class="col-md-6">
+            <a class="btn btn-primary" role="button" th:href="@{'/recordlabels/new'}" th:method="put">Add Record Label</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

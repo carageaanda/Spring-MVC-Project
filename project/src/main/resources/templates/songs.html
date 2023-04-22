@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Songs</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css"/>
+    <script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/webjars/popper.js/2.9.3/umd/popper.min.js"></script>
+    <script src="/webjars/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:insert="navbar :: navbar"></div>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>Song Title</th>
+        <th>Song Length</th>
+        <th>Language</th>
+        <th>Album</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="song : ${songs}">
+        <td th:text="${song.songTitle}"></td>
+        <td th:text="${song.songLength}"></td>
+        <td th:text="${song.language}"></td>
+        <td th:text="${song.album.albumName}"></td>
+        <td>
+            <a href="#" th:href="@{'/songs/{id}'(id=${song.getSongId()})}">
+                <button class="btn btn-success">Details</button>
+            </a>
+        </td>
+
+        <td sec:authorize="hasRole('ADMIN')">
+            <form th:object="${song}" th:action="@{/songs/{id}/delete(id=${song.getSongId()})}" th:method="GET">
+                <button class="btn btn-danger">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<nav aria-label="Page navigation" class="paging">
+    <ul class="pagination" th:if="${songs.totalPages > 0}">
+        <li class="page-item" th:if="${songs.number > 0}">
+            <a class="page-link"
+               th:href="@{/songs(size=${songs.size}, page=${songs.number}, sortBy=${sortBy})}">Previous</a>
+        </li>
+        <th:block th:each="pageNumber : ${#numbers.sequence(1, T(java.lang.Math).min(7, songs.totalPages))}">
+            <li class="page-item" th:classappend="${pageNumber == songs.number + 1} ? active">
+                <a th:class="page-link" th:classappend="${pageNumber == songs.number + 1} ? active"
+                   th:href="@{/songs(size=${songs.size}, page=${pageNumber}, sortBy=${sortBy})}"
+                   th:text="${pageNumber}"></a>
+            </li>
+        </th:block>
+        <li class="page-item" th:if="${songs.number < (songs.totalPages - 1)}">
+            <a class="page-link"
+               th:href="@{/songs(size=${songs.size}, page=${songs.number + 2}, sortBy=${sortBy})}">Next</a>
+        </li>
+    </ul>
+</nav>
+
+</body>
+</html>

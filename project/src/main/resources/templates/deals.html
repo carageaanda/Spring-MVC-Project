@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Deals</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css"/>
+    <script src="/webjars/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+</head>
+
+<div th:insert="navbar :: navbar"></div>
+
+<body>
+<div class="container">
+    <table class="table table-striped table-hover ">
+        <thead class="thead-inverse">
+        <tr>
+            <th>ID</th>
+            <th>Signing Date</th>
+            <th>Contract Length</th>
+            <th>Details</th>
+            <th sec:authorize="hasRole('ADMIN')">Edit</th>
+            <th sec:authorize="hasRole('ADMIN')">Delete</th>
+        </tr>
+        </thead>
+        <tr th:each="deal: ${deals}">
+
+            <td th:text="${deal.id}"></td>
+            <td th:text="${deal.signingDate}"></td>
+            <td th:text="${deal.contractLength + ' years'}"></td>
+            <td>
+                <a href="#" th:href="@{'/deals/{id}'(id=${deal.id})}">
+                    <button class="btn btn-success">Details</button>
+                </a>
+            </td>
+            <td sec:authorize="hasRole('ADMIN')">
+                <a class="btn btn-info" href="#" th:href="@{/deals/{id}/edit(id=${deal.id})}"
+                   role="button">
+                    Edit
+                </a>
+            </td>
+            <td sec:authorize="hasRole('ADMIN')">
+                <form th:object="${deal}" th:action="@{/deals/{id}/delete(id=${deal.id})}"
+                      th:method="GET">
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+<div sec:authorize="hasRole('ADMIN')" class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <a class="btn btn-primary" role="button" th:href="@{'/deals/new'}" th:method="post">Add Deals</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
