@@ -13,7 +13,7 @@
 
     <div class="panel panel-primary">
 
-        <div class="panel-heading" style="background-color:lightgray;">
+        <div class="panel-heading" style="text-align: center;">
             <h1 class="panel-title">Details</h1>
         </div>
 
@@ -96,14 +96,14 @@
                                 <td th:text="${artist.recordLabel.name}"></td>
                                 <td th:text="${T(com.example.project.service.Helper).formatDate(consult.date)}"></td>
                                 <td>
-                                    <a class="btn btn-secondary" href="#"
+                                    <a class="btn btn-success" href="#"
                                        th:href="@{'/consults/{id}'(id=${consult.id})}"
                                        role="button">
                                         Details
                                     </a>
                                 </td>
                                 <td sec:authorize="hasRole('ADMIN')">
-                                    <a class="btn btn-secondary" href="#"
+                                    <a class="btn btn-info" href="#"
                                        th:href="@{'/consults/{id}/edit'(id=${consult.id})}"
                                        role="button">
                                         Edit
@@ -112,7 +112,7 @@
                                 <td sec:authorize="hasRole('ADMIN')">
                                     <form th:object="${artist}" th:action="@{'/consults/{id}/delete'(id=${consult.id})}"
                                           th:method="GET">
-                                        <button class="btn btn-secondary">Delete</button>
+                                        <button class="btn btn-danger">Delete</button>
                                     </form>
                                 </td>
                             </tr>

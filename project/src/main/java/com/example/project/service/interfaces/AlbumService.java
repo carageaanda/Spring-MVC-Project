@@ -12,7 +12,5 @@ public interface AlbumService {
 
     AlbumSongDTO getAlbumDTOById(Long albumId);
 
-    void saveAlbum(Album album);
-
     void deleteAlbumById(Long albumId);
 }

@@ -39,9 +39,6 @@ public class AlbumServiceImpl implements AlbumService {
         return albumSongDTO;
     }
 
-    public void saveAlbum(Album album) {
-        albumRepository.save(album);
-    }
 
     public void deleteAlbumById(Long albumId) {
         albumRepository.deleteById(albumId);

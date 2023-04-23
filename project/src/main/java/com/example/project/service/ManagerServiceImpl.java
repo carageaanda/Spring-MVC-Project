@@ -68,7 +68,7 @@ public class ManagerServiceImpl implements ManagerService {
         if (userService.isAdmin()) {
             // admins can't change passwords
             var managerInDB = getById(user.getManagers().getId());
-            var userInDB =managerInDB.getUser();
+            var userInDB = managerInDB.getUser();
 
             managerInDB.setFirstName(manager.getFirstName());
             managerInDB.setLastName(manager.getLastName());

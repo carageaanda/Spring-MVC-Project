@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Managers</title>
-    <link rel="stylesheet" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css"/>
+    <link href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet"/>
     <script src="/webjars/bootstrap/5.1.3/js/bootstrap.min.js"></script>
 </head>
 
-<div th:insert="navbar :: navbar">  </div>
+<div th:insert="navbar :: navbar"></div>
 
 <body>
 <div class="container">
@@ -35,13 +35,13 @@
                 </a>
             </td>
             <td sec:authorize="hasRole('ADMIN')">
-                <a class="btn btn-info" href="#" th:href="@{/managers/{id}/edit(id=${manager.id})}"
-                   role="button">
+                <a class="btn btn-info" href="#" role="button"
+                   th:href="@{/managers/{id}/edit(id=${manager.id})}">
                     Edit
                 </a>
             </td>
             <td sec:authorize="hasRole('ADMIN')">
-                <form th:object="${manager}" th:action="@{/managers/{id}/delete(id=${manager.id})}" th:method="GET">
+                <form th:action="@{/managers/{id}/delete(id=${manager.id})}" th:method="GET" th:object="${manager}">
                     <button class="btn btn-danger">Delete</button>
                 </form>
             </td>

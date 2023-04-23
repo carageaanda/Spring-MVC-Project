@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>NavigationBar</title>
 </head>
 
 <body>
-<nav th:fragment="navbar" class="navbar navbar-expand-md bg-dark navbar-dark">
+<nav class="navbar navbar-expand-md bg-dark navbar-dark" th:fragment="navbar">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" th:href="@{/}">Home!</a>
+            <a class="navbar-brand" th:href="@{/}">Home</a>
         </div>
         <ul class="nav navbar-nav">
             <li><a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/index' ? 'active':''}"
@@ -62,14 +62,14 @@
             </li>
 
             <li>
-                <form th:if="${T(com.example.project.service.security.UserService).isLoggedIn()}" id="logoutform"
-                      th:action="@{/logout}" method="POST">
+                <form id="logoutform" method="POST"
+                      th:action="@{/logout}" th:if="${T(com.example.project.service.security.UserService).isLoggedIn()}">
                     <a class="nav-link" href="#" onclick="document.getElementById('logoutform').submit()">
                         Logout
                     </a>
                 </form>
-                <a class="nav-link" th:unless="${T(com.example.project.service.security.UserService).isLoggedIn()}"
-                   id="loginform" th:href="@{/login}">
+                <a class="nav-link" id="loginform"
+                   th:href="@{/login}" th:unless="${T(com.example.project.service.security.UserService).isLoggedIn()}">
                     Login
                 </a>
             </li>

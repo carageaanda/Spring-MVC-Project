@@ -45,6 +45,7 @@ public class ArtistController {
         return VIEW_ARTIST;
     }
 
+
     @GetMapping("/new")
     public String addArtist(Model model) {
         if (!model.containsAttribute("artist")) {
@@ -59,9 +60,9 @@ public class ArtistController {
     }
 
     @GetMapping("/{id}/edit")
-    public String editArtist(@PathVariable("id") String artistId, Model model) {
+    public String editRecordLabel(@PathVariable("id") String artistId, Model model) {
         var artist = artistService.getArtistById(Long.valueOf(artistId));
-        var recordLabels = recordLabelService.getAllRecordLabels();
+        var recordlabels = recordLabelService.getAllRecordLabels();
 
         if (!model.containsAttribute("artist")) {
             model.addAttribute("artist", artist);
@@ -69,7 +70,7 @@ public class ArtistController {
         if (!model.containsAttribute("address")) {
             model.addAttribute("address", artist.getAddress());
         }
-        model.addAttribute("recordLabelsAll", recordLabels);
+        model.addAttribute("recordLabelAll", recordlabels);
 
         return ADD_EDIT_ARTIST;
     }
@@ -80,6 +81,8 @@ public class ArtistController {
                                RedirectAttributes attr) {
         if (bindingResultArtist.hasErrors() || bindingResultAddress.hasErrors()) {
             log.info("Model binding has errors!");
+            log.info("Artist binding errors: " + bindingResultArtist.getAllErrors());
+            log.info("Address binding errors: " + bindingResultAddress.getAllErrors());
 
             attr.addFlashAttribute(BINDING_RESULT_PATH + "artist", bindingResultArtist);
             attr.addFlashAttribute(BINDING_RESULT_PATH + "address", bindingResultAddress);

@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
-
 import static com.example.project.controller.RecordLabelController.*;
 
 @Controller
@@ -33,7 +32,7 @@ public class AlbumController {
 
     @GetMapping("/{id}")
     public String getById(@PathVariable("id") Long albumId, Model model) {
-       AlbumSongDTO albumSongDTO = albumService.getAlbumDTOById(albumId);
+        AlbumSongDTO albumSongDTO = albumService.getAlbumDTOById(albumId);
         model.addAttribute("album", albumSongDTO);
         return VIEW_ALBUMS;
     }
