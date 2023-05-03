@@ -8,4 +8,4 @@ As for the database, two different databases were used, and two distinct profile
 
 The security of the application is implemented using Spring Security. Password encryption to securely store user passwords in the database was performed using the PasswordEncoder interface. The application has two roles: ROLE_ADMIN and ROLE_MANAGER. The ROLE_ADMIN role has the highest level of access and can perform any action within the application. The ROLE_MANAGER role has a lower level of access and can only perform specific actions. To secure web resources, the application uses URL-based Security configuration. Certain URL addresses are restricted to certain roles, allowing only users with the necessary authority to access those resources.
 
-The project architecture also includes the frontend part, which interacts with the backend Spring MVC application. The interface is built using Thymeleaf, which allows for the creation of dynamic web pages.
+The project architecture also includes the frontend part, which interacts with the backend. The interface is built using Thymeleaf, which allows for the creation of dynamic web pages.
